@@ -1,0 +1,61 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-1.12.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+
+    angular.module('todoApp', [])
+            .controller('todoController', function($scope) {
+                $scope.tasks = [];
+                $scope.add = function() {
+                    if($scope.title!="")
+                    $scope.tasks.push($scope.title);
+                }
+                $scope.delete = function() {
+                    $scope.tasks.splice(this.$index, 1);
+                }
+            })
+</script>
+</head>
+
+<body style="background-color: 	#EAEAEA">
+<div class="container">
+    <div ng-app="todoApp" ng-controller="todoController">
+        <div class="row">
+            <div class="col-md-8 col-xs-12" style="background-color: #ffffff">
+                <input ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" style="width: 100%; border: 0;">
+            </div>
+        </div>
+
+        <div ng-repeat="t in tasks track by $index">
+            <div class="row">
+                <div class="col-md-4 col-xs-6" style="background-color: #ffffff" >
+                   <div style="display: inline-block">
+                       <img src="images/circle.png" width="20" height="20">
+                   </div>
+                    <div style="display: inline-block">{{t}}</div>
+                </div>
+                <div class="col-md-4 col-xs-6" style="text-align: right;background-color: #ffffff">
+                    <div class="deleteDiv" ng-click="delete()">
+                        <img src="images/delete.png" width="21" height="21">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-xs-12" style="background-color: #ffffff" >
+                <hr>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
