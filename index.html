@@ -15,30 +15,66 @@
 </style>
 <script>
 
-    angular.module('todoApp', [])
+
+   var app= angular.module('todoApp', [])
             .controller('todoController', function($scope) {
+
                 $scope.tasks = [];
+                $scope.completedTasks=[];
                 $scope.add = function() {
                     if($scope.title!="")
                     $scope.tasks.push($scope.title);
-                }
+                };
                 $scope.delete = function() {
                     $scope.tasks.splice(this.$index, 1);
-                }
-            })
+                };
+                $scope.showCompleted=function()
+                {
+                   before();
+                   $scope.tasks=$scope.completedTasks;
+                   $scope.completedTasks=[];
+                };
+                $scope.completed=function(param)
+                {
+                     if($scope.completedTasks.indexOf(param) == -1)
+                        $scope.completedTasks.push(param);
+                      else{
+                         var idx = $scope.completedTasks.indexOf(param);
+                         if (idx !== -1) {
+                             $scope.completedTasks.splice(idx, 1);
+                         }
+                     }
+
+                };
+
+            });
+
 
     function selectImage(elem) {
 
-      if(elem.src=="http://localhost/AngularJS/images/circle.png")
-      {
+
+      if(elem.src=="http://localhost/AngularJS/images/circle.png"){
           elem.src="images/selected.png";
           elem.parentElement.parentElement.children[1].style.opacity="0.5";
           elem.parentElement.parentElement.children[1].style.textDecoration="line-through";
+
       }else{
           elem.src="images/circle.png";
           elem.parentElement.parentElement.children[1].style.opacity="1.0";
           elem.parentElement.parentElement.children[1].style.textDecoration="none";
 
+      }
+
+    }
+
+    function before()
+    {
+      var elements=document.getElementsByClassName('sel');
+      for(var i=0;i<elements.length;i++)
+      {
+          elements[i].src="images/selected.png";
+          elements[i].parentElement.parentElement.children[1].style.opacity="0.5";
+          elements[i].parentElement.parentElement.children[1].style.textDecoration="line-through";
       }
     }
 
@@ -46,7 +82,7 @@
 </script>
 </head>
 
-<body >
+<body style="background-color: #EAEAEA">
 <div class="container" style=" margin: 0 auto;">
     todo
     <div ng-app="todoApp" ng-controller="todoController">
@@ -60,13 +96,13 @@
             <div class="row">
                 <div class="col-md-4 col-xs-6 inner" >
                    <div class="inlineDiv">
-                       <img src="images/circle.png" width="20" height="20" onclick="selectImage(this);">
+                       <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
                    </div>
                     <div class="inlineDiv">{{t}}</div>
                 </div>
                 <div class="col-md-4 col-xs-6 inner right">
                     <div ng-click="delete()" style="cursor: pointer;">
-                        <img class="del" src="images/delete.png" width="20" height="20"  >
+                        <img class="del" src="images/delete.png" width="21" height="21"  >
                     </div>
                 </div>
             </div>
@@ -77,7 +113,14 @@
             </div>
         </div>
 
+        <div id="footer" >
+          <div class="inlineDiv">{{tasks.length}} items left </div>
+          <div class="inlineDiv"> All Tasks</div>
+          <div class="inlineDiv" ng-click="showCompleted()"> Completed Tasks</div>
+        </div>
+
     </div>
+
 </div>
 
 </body>
