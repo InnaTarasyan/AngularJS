@@ -5,6 +5,14 @@
 <script src="js/jquery-1.12.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<style>
+  .del{
+      opacity: 0;
+  }
+  .del:hover{
+      opacity: 1;
+  }
+</style>
 <script>
 
     angular.module('todoApp', [])
@@ -18,11 +26,23 @@
                     $scope.tasks.splice(this.$index, 1);
                 }
             })
+
+    function changeImage(elem) {
+
+      if(elem.src=="http://localhost/AngularJS/images/circle.png")
+      {
+          elem.src="images/selected.png";
+      }else{
+          elem.src="images/circle.png";
+      }
+    }
+
 </script>
 </head>
 
-<body class="body">
-<div class="container">
+<body >
+<div class="container" style=" margin: 0 auto;">
+    todo
     <div ng-app="todoApp" ng-controller="todoController">
         <div class="row">
             <div class="col-md-8 col-xs-12 inner" >
@@ -34,13 +54,13 @@
             <div class="row">
                 <div class="col-md-4 col-xs-6 inner" >
                    <div class="inlineDiv">
-                       <img src="images/circle.png" width="20" height="20">
+                       <img src="images/circle.png" width="20" height="20" onclick="changeImage(this);">
                    </div>
                     <div class="inlineDiv">{{t}}</div>
                 </div>
                 <div class="col-md-4 col-xs-6 inner right">
-                    <div class="deleteDiv" ng-click="delete()">
-                        <img src="images/delete.png" width="21" height="21">
+                    <div ng-click="delete()" style="cursor: pointer;">
+                        <img class="del" src="images/delete.png" width="20" height="20"  >
                     </div>
                 </div>
             </div>
