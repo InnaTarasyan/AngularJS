@@ -27,13 +27,18 @@
                 }
             })
 
-    function changeImage(elem) {
+    function selectImage(elem) {
 
       if(elem.src=="http://localhost/AngularJS/images/circle.png")
       {
           elem.src="images/selected.png";
+          elem.parentElement.parentElement.children[1].style.opacity="0.5";
+          elem.parentElement.parentElement.children[1].style.textDecoration="line-through";
       }else{
           elem.src="images/circle.png";
+          elem.parentElement.parentElement.children[1].style.opacity="1.0";
+          elem.parentElement.parentElement.children[1].style.textDecoration="none";
+
       }
     }
 
@@ -55,7 +60,7 @@
             <div class="row">
                 <div class="col-md-4 col-xs-6 inner" >
                    <div class="inlineDiv">
-                       <img src="images/circle.png" width="20" height="20" onclick="changeImage(this);">
+                       <img src="images/circle.png" width="20" height="20" onclick="selectImage(this);">
                    </div>
                     <div class="inlineDiv">{{t}}</div>
                 </div>
