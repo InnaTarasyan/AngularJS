@@ -20,32 +20,44 @@
             .controller('todoController', function($scope) {
 
                 $scope.tasks = [];
-                $scope.completedTasks=[];
-                $scope.add = function() {
-                    if($scope.title!="")
-                    $scope.tasks.push($scope.title);
+                $scope.completedTasks = [];
+                $scope.allTasks=[];
+
+                $scope.add = function () {
+                    if ($scope.title != "")
+                        $scope.tasks.push($scope.title);
                 };
-                $scope.delete = function() {
+
+                $scope.delete = function () {
                     $scope.tasks.splice(this.$index, 1);
                 };
-                $scope.showCompleted=function()
-                {
-                   before();
-                   $scope.tasks=$scope.completedTasks;
-                   $scope.completedTasks=[];
-                };
-                $scope.completed=function(param)
-                {
-                     if($scope.completedTasks.indexOf(param) == -1)
-                        $scope.completedTasks.push(param);
-                      else{
-                         var idx = $scope.completedTasks.indexOf(param);
-                         if (idx !== -1) {
-                             $scope.completedTasks.splice(idx, 1);
-                         }
-                     }
 
+                $scope.showCompleted = function () {
+                    selectTask();
+                    $scope.allTasks=$scope.tasks;
+                    $scope.tasks = $scope.completedTasks;
+                    $scope.completedTasks = [];
                 };
+
+                $scope.completed = function (param) {
+                    if ($scope.completedTasks.indexOf(param) == -1)
+                        $scope.completedTasks.push(param);
+                    else {
+                        var idx = $scope.completedTasks.indexOf(param);
+                        if (idx !== -1) {
+                            $scope.completedTasks.splice(idx, 1);
+                        }
+                    }
+                };
+
+
+                $scope.showAll = function(){
+                    unSelectTask();
+                    $scope.tasks=$scope.allTasks;
+                    $scope.allTasks=[];
+
+                }
+
 
             });
 
@@ -67,7 +79,7 @@
 
     }
 
-    function before()
+    function selectTask()
     {
       var elements=document.getElementsByClassName('sel');
       for(var i=0;i<elements.length;i++)
@@ -77,6 +89,16 @@
           elements[i].parentElement.parentElement.children[1].style.textDecoration="line-through";
       }
     }
+
+   function unSelectTask()
+   {
+       var elements=document.getElementsByClassName('sel');
+       for(var i=0;i<elements.length;i++) {
+           elements[i].src="images/circle.png";
+           elements[i].parentElement.parentElement.children[1].style.opacity="1.0";
+           elements[i].parentElement.parentElement.children[1].style.textDecoration="none";
+       }
+   }
 
 
 </script>
@@ -115,7 +137,7 @@
 
         <div id="footer" >
           <div class="inlineDiv">{{tasks.length}} items left </div>
-          <div class="inlineDiv"> All Tasks</div>
+          <div class="inlineDiv" ng-click="showAll()"> All Tasks</div>
           <div class="inlineDiv" ng-click="showCompleted()"> Completed Tasks</div>
         </div>
 
