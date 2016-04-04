@@ -1,111 +1,125 @@
 <html>
 <head>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/styles.css">
-<script src="js/jquery-1.12.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<style>
-  .del{
-      opacity: 0;
-  }
-  .del:hover{
-      opacity: 1;
-  }
-</style>
-<script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-1.12.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <style>
+        .del{
+            opacity: 0;
+        }
+        .del:hover{
+            opacity: 1;
+        }
+    </style>
+    <script>
 
 
-   var app= angular.module('todoApp', [])
-            .controller('todoController', function($scope) {
+        var app= angular.module('todoApp', [])
+                .controller('todoController', function($scope) {
 
-                $scope.tasks = [];
-                $scope.completedTasks = [];
-                $scope.allTasks=[];
-
-                $scope.add = function () {
-                    if ($scope.title != "")
-                        $scope.tasks.push($scope.title);
-                };
-
-                $scope.delete = function () {
-                    $scope.tasks.splice(this.$index, 1);
-                };
-
-                $scope.showCompleted = function () {
-                    selectTask();
-                    $scope.allTasks=$scope.tasks;
-                    $scope.tasks = $scope.completedTasks;
+                    $scope.tasks = [];
                     $scope.completedTasks = [];
-                };
+                    $scope.allTasks=[];
 
-                $scope.completed = function (param) {
-                    if ($scope.completedTasks.indexOf(param) == -1)
-                        $scope.completedTasks.push(param);
-                    else {
-                        var idx = $scope.completedTasks.indexOf(param);
+                    $scope.add = function () {
+                        if ($scope.title != "")
+                            $scope.tasks.push({title:$scope.title,status:'active'});
+                    };
+
+                    $scope.delete = function () {
+
+                        var idx = $scope.completedTasks.indexOf($scope.tasks[this.$index]);
                         if (idx !== -1) {
                             $scope.completedTasks.splice(idx, 1);
                         }
+                        $scope.tasks.splice(this.$index, 1);
+                    };
+
+                    $scope.showCompleted = function () {
+                        $scope.allTasks=$scope.tasks;
+                        $scope.tasks = $scope.completedTasks;
+
+                        // $scope.completedTasks = [];
+                    };
+
+                    $scope.completed = function (param) {
+                        if ($scope.completedTasks.indexOf(param) == -1)
+                        {
+                            param.status='completed';
+                            $scope.completedTasks.push(param);
+                        }
+                        else {
+                            var idx = $scope.completedTasks.indexOf(param);
+                            param.status='active';
+                            if (idx !== -1) {
+                                $scope.completedTasks.splice(idx, 1);
+                            }
+                        }
+                    };
+
+
+                    $scope.showAll = function(){
+                        unSelectAllTasks();
+                        $scope.tasks=$scope.allTasks;
+                        $scope.allTasks=[];
+
+
+
+                    };
+                    $scope.showActive=function(){
+
+                        unSelectAllTasks();
+                        $scope.allTasks=$scope.tasks;
+                        $scope.tasks = $scope.tasks.filter(function(x) { return $scope.completedTasks.indexOf(x) < 0 })
+
+                    };
+                    $scope.clearCompleted=function(){
+                        $scope.completedTasks=[];
                     }
-                };
 
 
-                $scope.showAll = function(){
-                    unSelectTask();
-                    $scope.tasks=$scope.allTasks;
-                    $scope.allTasks=[];
 
-                }
+                });
 
 
-            });
+        function selectImage(elem) {
 
 
-    function selectImage(elem) {
+            if(elem.src=="http://localhost/AngularJS/images/circle.png"){
+                elem.src="images/selected.png";
+                elem.parentElement.parentElement.children[1].style.opacity="0.5";
+                elem.parentElement.parentElement.children[1].style.textDecoration="line-through";
+
+            }else{
+                elem.src="images/circle.png";
+                elem.parentElement.parentElement.children[1].style.opacity="1.0";
+                elem.parentElement.parentElement.children[1].style.textDecoration="none";
+
+            }
+
+        }
+
+        function unSelectAllTasks()
+        {
+            var elements=document.getElementsByClassName('sel');
+            for(var i=0;i<elements.length;i++) {
+                elements[i].src="images/circle.png";
+                elements[i].parentElement.parentElement.children[1].style.opacity="1.0";
+                elements[i].parentElement.parentElement.children[1].style.textDecoration="none";
+            }
+        }
 
 
-      if(elem.src=="http://localhost/AngularJS/images/circle.png"){
-          elem.src="images/selected.png";
-          elem.parentElement.parentElement.children[1].style.opacity="0.5";
-          elem.parentElement.parentElement.children[1].style.textDecoration="line-through";
-
-      }else{
-          elem.src="images/circle.png";
-          elem.parentElement.parentElement.children[1].style.opacity="1.0";
-          elem.parentElement.parentElement.children[1].style.textDecoration="none";
-
-      }
-
-    }
-
-    function selectTask()
-    {
-      var elements=document.getElementsByClassName('sel');
-      for(var i=0;i<elements.length;i++)
-      {
-          elements[i].src="images/selected.png";
-          elements[i].parentElement.parentElement.children[1].style.opacity="0.5";
-          elements[i].parentElement.parentElement.children[1].style.textDecoration="line-through";
-      }
-    }
-
-   function unSelectTask()
-   {
-       var elements=document.getElementsByClassName('sel');
-       for(var i=0;i<elements.length;i++) {
-           elements[i].src="images/circle.png";
-           elements[i].parentElement.parentElement.children[1].style.opacity="1.0";
-           elements[i].parentElement.parentElement.children[1].style.textDecoration="none";
-       }
-   }
+    </script>
 
 
-</script>
+
 </head>
 
-<body style="background-color: #EAEAEA">
-<div class="container" style=" margin: 0 auto;">
+<body style="background-color: #EAEAEA;">
+<div class="container" style=" margin: 0 auto;width: 60%;">
     todo
     <div ng-app="todoApp" ng-controller="todoController">
         <div class="row">
@@ -117,10 +131,16 @@
         <div ng-repeat="t in tasks track by $index">
             <div class="row">
                 <div class="col-md-4 col-xs-6 inner" >
-                   <div class="inlineDiv">
-                       <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
-                   </div>
-                    <div class="inlineDiv">{{t}}</div>
+                    <div class="inlineDiv" ng-if="t.status == 'active'">
+                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
+                    </div>
+                    <div class="inlineDiv" ng-if="t.status !== 'active'">
+                        <img class="sel" src="images/selected.png"  width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
+                    </div>
+                    <div class="inlineDiv" style="opacity: 0.5;text-decoration:line-through" ng-if="t.status !== 'active'">
+                        {{t.title}}
+                    </div>
+                    <div class="inlineDiv"  ng-if="t.status == 'active'">{{t.title}}</div>
                 </div>
                 <div class="col-md-4 col-xs-6 inner right">
                     <div ng-click="delete()" style="cursor: pointer;">
@@ -130,15 +150,27 @@
             </div>
             <div class="row">
                 <div class="col-md-8 col-xs-12 inner" >
-                <hr>
+                    <hr>
                 </div>
             </div>
         </div>
 
-        <div id="footer" >
-          <div class="inlineDiv">{{tasks.length}} items left </div>
-          <div class="inlineDiv" ng-click="showAll()"> All Tasks</div>
-          <div class="inlineDiv" ng-click="showCompleted()"> Completed Tasks</div>
+        <div class="row">
+            <div class="col-md-4 inner" >
+                {{tasks.length}} items left
+            </div>
+            <div class="col-md-1  inner" >
+                <div ng-click="showAll()">All</div>
+            </div>
+            <div class="col-md-1  inner">
+                <div ng-click="showCompleted()">Completed</div>
+            </div>
+            <div class="col-md-1  inner" >
+                <div ng-click="showActive()">Active</div>
+            </div>
+            <div class="col-md-1  inner" >
+                <div ng-click="clearCompleted()">Clear</div>
+            </div>
         </div>
 
     </div>
