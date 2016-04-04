@@ -25,7 +25,12 @@
 
                     $scope.add = function () {
                         if ($scope.title != "")
+                        {
                             $scope.tasks.push({title:$scope.title,status:'active'});
+                            //$scope.allTasks.push({title:$scope.title,status:'active'});
+
+                        }
+
                     };
 
                     $scope.delete = function () {
@@ -38,7 +43,9 @@
                     };
 
                     $scope.showCompleted = function () {
+                        //unSelectAllTasks();
                         $scope.allTasks=$scope.tasks;
+
                         $scope.tasks = $scope.completedTasks;
 
                         // $scope.completedTasks = [];
@@ -61,15 +68,12 @@
 
 
                     $scope.showAll = function(){
-                        unSelectAllTasks();
+                       // unSelectAllTasks();
                         $scope.tasks=$scope.allTasks;
-                        $scope.allTasks=[];
-
-
+                       // $scope.allTasks=[];
 
                     };
                     $scope.showActive=function(){
-
                         unSelectAllTasks();
                         $scope.allTasks=$scope.tasks;
                         $scope.tasks = $scope.tasks.filter(function(x) { return $scope.completedTasks.indexOf(x) < 0 })
@@ -129,19 +133,25 @@
         </div>
 
         <div ng-repeat="t in tasks track by $index">
-            <div class="row">
-                <div class="col-md-4 col-xs-6 inner" >
-                    <div class="inlineDiv" ng-if="t.status == 'active'">
-                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
-                    </div>
-                    <div class="inlineDiv" ng-if="t.status !== 'active'">
+            <div class="row" >
+                <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'completed'">
+
+                    <div class="inlineDiv" >
                         <img class="sel" src="images/selected.png"  width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
                     </div>
-                    <div class="inlineDiv" style="opacity: 0.5;text-decoration:line-through" ng-if="t.status !== 'active'">
+                    <div class="inlineDiv" style="opacity: 0.5;text-decoration:line-through" >
                         {{t.title}}
                     </div>
-                    <div class="inlineDiv"  ng-if="t.status == 'active'">{{t.title}}</div>
                 </div>
+
+                <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'active'">
+
+                    <div class="inlineDiv" >
+                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
+                    </div>
+                    <div class="inlineDiv">{{t.title}}</div>
+                </div>
+
                 <div class="col-md-4 col-xs-6 inner right">
                     <div ng-click="delete()" style="cursor: pointer;">
                         <img class="del" src="images/delete.png" width="21" height="21"  >
