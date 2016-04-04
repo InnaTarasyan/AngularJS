@@ -29,7 +29,7 @@
                 };
 
                 $scope.delete = function () {
-                    unSelectTasks();
+                    unSelectAllTasks();
                     var idx = $scope.completedTasks.indexOf($scope.tasks[this.$index]);
                     if (idx !== -1) {
                         $scope.completedTasks.splice(idx, 1);
@@ -38,7 +38,7 @@
                 };
 
                 $scope.showCompleted = function () {
-                    selectTasks();
+                    selectAllTasks();
                     $scope.allTasks=$scope.tasks;
                     $scope.tasks = $scope.completedTasks;
                    // $scope.completedTasks = [];
@@ -57,18 +57,23 @@
 
 
                 $scope.showAll = function(){
-                    unSelectTasks();
+                    unSelectAllTasks();
                     $scope.tasks=$scope.allTasks;
                     $scope.allTasks=[];
 
-                }
-                $scope.showActive=function(){
-                    unSelectTasks();
+                    selectTasks($scope.completedTasks);
 
+                };
+                $scope.showActive=function(){
+                    unSelectAllTasks();
                     $scope.allTasks=$scope.tasks;
                     $scope.tasks = $scope.tasks.filter(function(x) { return $scope.completedTasks.indexOf(x) < 0 })
 
+                };
+                $scope.clearCompleted=function(){
+                      $scope.completedTasks=[];
                 }
+
 
 
             });
@@ -91,7 +96,7 @@
 
     }
 
-    function selectTasks()
+    function selectAllTasks()
     {
       var elements=document.getElementsByClassName('sel');
       for(var i=0;i<elements.length;i++)
@@ -102,7 +107,7 @@
       }
     }
 
-   function unSelectTasks()
+   function unSelectAllTasks()
    {
        var elements=document.getElementsByClassName('sel');
        for(var i=0;i<elements.length;i++) {
@@ -112,10 +117,12 @@
        }
    }
 
-    function unSelectTask(task)
-    {
+   function selectTasks(completedTasks)
+   {
 
-    }
+   }
+
+
 
 
 </script>
@@ -137,7 +144,7 @@
                    <div class="inlineDiv">
                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
                    </div>
-                    <div class="inlineDiv">{{t}}</div>
+                    <div class="inlineDiv myData">{{t}}</div>
                 </div>
                 <div class="col-md-4 col-xs-6 inner right">
                     <div ng-click="delete()" style="cursor: pointer;">
@@ -152,11 +159,22 @@
             </div>
         </div>
 
-        <div id="footer" >
-          <div class="inlineDiv">{{tasks.length}} items left </div>
-          <div class="inlineDiv" ng-click="showAll()"> All Tasks</div>
-          <div class="inlineDiv" ng-click="showCompleted()"> Completed Tasks</div>
-          <div class="inlineDiv" ng-click="showActive()"> Active Tasks</div>
+        <div class="row">
+            <div class="col-md-4  inner" >
+               {{tasks.length}} items left
+            </div>
+            <div class="col-md-1  inner" >
+              <div ng-click="showAll()">All</div>
+            </div>
+            <div class="col-md-1  inner">
+              <div ng-click="showCompleted()">Completed</div>
+            </div>
+            <div class="col-md-1  inner" >
+              <div ng-click="showActive()">Active</div>
+            </div>
+            <div class="col-md-1  inner" >
+           <div ng-click="clearCompleted()">Clear</div>
+            </div>
         </div>
 
     </div>
