@@ -25,6 +25,7 @@
                     $scope.allTasks=[];
                     $scope.tasks2=[];
                     var checked=false;
+                    var statuses=[];
 
 
                     $scope.add = function () {
@@ -136,13 +137,19 @@
 
                         if(checked==false) {
                             for (var i = 0; i < $scope.tasks.length; i++) {
+                                statuses.push($scope.tasks[i].status);
                                 $scope.tasks[i].status = "completed";
                             }
-                            $scope.completedTasks = $scope.tasks;
-                            checked=true;
-                        }else {
-                             alert($scope.tasks2.length);
+                           //$scope.completedTasks=$scope.tasks;
+                           checked=true;
+                        }else{
+                            for(var i=0;i<$scope.tasks.length;i++){
+                                $scope.tasks[i].status=statuses[i];
+                            }
+                            statuses=[];
+                            checked=false;
                         }
+
                     }
 
                 });
