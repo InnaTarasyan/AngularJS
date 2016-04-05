@@ -132,7 +132,17 @@
                     };
                     $scope.clearCompleted=function(){
                         $scope.completedTasks=[];
-                    }
+
+                        for(var i=0;i<$scope.tasks.length;i++){
+                          while($scope.tasks[i].status=="completed"){
+                              $scope.tasks.splice(i,1);
+
+                          }
+                        }
+
+
+
+                    };
                     $scope.selectAllRows=function(){
 
                         if(checked==false) {
