@@ -23,10 +23,13 @@
                     $scope.tasks = [];
                     $scope.completedTasks = [];
                     $scope.allTasks=[];
+                    $scope.tasks2=[];
+
 
                     $scope.add = function () {
                         if ($scope.title != "")
                         {
+                            document.getElementById("input").value="";
                             $scope.tasks.push({title:$scope.title,status:'active'});
                             //$scope.allTasks.push({title:$scope.title,status:'active'});
 
@@ -45,7 +48,12 @@
 
                     $scope.showCompleted = function () {
                         //unSelectAllTasks();
-                        $scope.allTasks=$scope.tasks;
+
+                        //$scope.allTasks=$scope.tasks;
+                        if(count>0)
+                            $scope.allTasks=$scope.tasks2;
+                        else
+                            $scope.allTasks=$scope.tasks;
 
                         $scope.tasks = $scope.completedTasks;
 
@@ -67,16 +75,33 @@
                         }
                     };
 
-
+                    var count=0;
                     $scope.showAll = function(){
-                       // unSelectAllTasks();
+                        // unSelectAllTasks();
+
+
                         $scope.tasks=$scope.allTasks;
-                       // $scope.allTasks=[];
+
+
+                        if(count==0)
+                        {
+                            for(var i=0;i<$scope.tasks.length;i++)
+                            {
+                                $scope.tasks2[i]=$scope.tasks[i];
+                            }
+                        }
+                        count++;
+                        //alert($scope.tasks2);
+
+                        //$scope.tasks=$scope.tasks2;
+
+                        // $scope.allTasks=[];
 
                     };
                     $scope.showActive=function(){
+                        $scope.tasks=$scope.allTasks;
                         unSelectAllTasks();
-                        $scope.allTasks=$scope.tasks;
+                        // $scope.allTasks=$scope.tasks;
                         $scope.tasks = $scope.tasks.filter(function(x) { return $scope.completedTasks.indexOf(x) < 0 })
 
                     };
@@ -129,7 +154,12 @@
     <div ng-app="todoApp" ng-controller="todoController">
         <div class="row">
             <div class="col-md-8 col-xs-12 inner" >
-                <input ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" class="inputBorder">
+                <div  class="inlineDiv" >
+                    <img src="images/arrow.png"  width="20" height="15"/>
+                </div>
+                <div  class="inlineDiv" style="width: 90%">
+                    <input id="input" ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" class="inputBorder">
+                </div>
             </div>
         </div>
 
