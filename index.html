@@ -79,7 +79,7 @@
                     $scope.showAll = function(){
                         // unSelectAllTasks();
 
-
+                        if($scope.allTasks.length!=0)
                         $scope.tasks=$scope.allTasks;
 
 
@@ -107,6 +107,10 @@
                     };
                     $scope.clearCompleted=function(){
                         $scope.completedTasks=[];
+                    }
+                    $scope.selectAllRows=function(){
+
+                        alert("Hello");
                     }
 
 
@@ -155,7 +159,7 @@
         <div class="row">
             <div class="col-md-8 col-xs-12 inner" >
                 <div  class="inlineDiv" >
-                    <img src="images/arrow.png"  width="20" height="15"/>
+                    <img ng-click="selectAllRows()" src="images/arrow.png"  width="20" height="15"/>
                 </div>
                 <div  class="inlineDiv" style="width: 90%">
                     <input id="input" ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" class="inputBorder">
