@@ -155,14 +155,28 @@
                             }
 
                            // $scope.completedTasks=$scope.tasks;
+
+                            for(var i=0;i<$scope.tasks.length;i++){
+                                if($scope.tasks[i].status=="completed"){
+                                    $scope.completedTasks[i]=$scope.tasks[i];
+                                }
+                            }
+
                             checked=true;
                         }else if(checked==true){
 
 
                             for(var i=0;i<$scope.tasks.length;i++){
                                 $scope.tasks[i].status=statuses[i];
+                                if( $scope.tasks[i].status=="active"){
+                                var idx = $scope.completedTasks.indexOf( $scope.tasks[i]);
+                                    $scope.completedTasks.splice(idx, 1);
+                                }
+
+
 
                             }
+
 
                             statuses=[];
                             checked=false;
