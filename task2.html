@@ -184,6 +184,14 @@
 
                     }
 
+                    $scope.edit=function(event,t){
+
+                        var textInput=event.target.value;
+                        var idx = $scope.tasks.indexOf(t);
+                        $scope.tasks[idx]={title:textInput,status:'active'};
+
+                    }
+
                 });
 
 
@@ -243,7 +251,7 @@
                 <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'completed'">
 
                     <div class="inlineDiv" >
-                        <img class="sel" src="images/selected.png"  width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
+                        <img class="sel" src="images/selected.png"  width="30" height="30"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
                     </div>
                     <div class="inlineDiv" style="opacity: 0.5;text-decoration:line-through" >
                        {{t.title}}
@@ -253,14 +261,16 @@
                 <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'active'">
 
                     <div class="inlineDiv" >
-                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
+                        <img class="sel" src="images/circle.png" width="30" height="30"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
                     </div>
-                    <div class="inlineDiv">{{t.title}}</div>
+                    <div class="inlineDiv">
+                        <input type="text" value={{t.title}} style="border: none;background: transparent;" ng-keyup="edit($event,t)">
+                    </div>
                 </div>
 
                 <div class="col-md-4 col-xs-6 inner right">
-                    <div  >
-                        <img class="del" ng-click="delete()" src="images/delete.png" width="20" height="20"  style="cursor: pointer;">
+                    <div>
+                        <img class="del" ng-click="delete()" src="images/delete.png" width="30" height="30" style="outline: none;cursor: pointer" >
                     </div>
                 </div>
             </div>
