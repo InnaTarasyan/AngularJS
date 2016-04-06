@@ -13,6 +13,10 @@
         .del:hover{
             opacity: 1;
         }
+        .capabilities:hover {
+            outline: 1px solid black;
+            width: 100%;
+        }
     </style>
     <script>
 
@@ -165,7 +169,6 @@
                             checked=true;
                         }else if(checked==true){
 
-
                             for(var i=0;i<$scope.tasks.length;i++){
                                 $scope.tasks[i].status=statuses[i];
                                 if( $scope.tasks[i].status=="active"){
@@ -173,10 +176,7 @@
                                     $scope.completedTasks.splice(idx, 1);
                                 }
 
-
-
                             }
-
 
                             statuses=[];
                             checked=false;
@@ -223,7 +223,9 @@
 
 <body style="background-color: #EAEAEA;">
 <div class="container" style=" margin: 0 auto;width: 60%;">
-    todo
+    <div class="row">
+    <div style="color: red;font-size: 16pt;">TODO</div>
+    </div>
     <div ng-app="todoApp" ng-controller="todoController">
         <div class="row">
             <div class="col-md-8 col-xs-12 inner" >
@@ -231,7 +233,7 @@
                     <img ng-click="selectAllRows()" src="images/arrow.png"  width="20" height="15"/>
                 </div>
                 <div  class="inlineDiv" style="width: 90%">
-                    <input id="input" ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" class="inputBorder">
+                    <input id="input"  ng-model="title" ng-keyup="$event.keyCode == 13 ? add() : null"  placeholder="What needs to be done" class="inputBorder" style="padding: 10px">
                 </div>
             </div>
         </div>
@@ -241,17 +243,17 @@
                 <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'completed'">
 
                     <div class="inlineDiv" >
-                        <img class="sel" src="images/selected.png"  width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
+                        <img class="sel" src="images/selected.png"  width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
                     </div>
                     <div class="inlineDiv" style="opacity: 0.5;text-decoration:line-through" >
-                        {{t.title}}
+                       {{t.title}}
                     </div>
                 </div>
 
                 <div class="col-md-4 col-xs-6 inner"  ng-if="t.status == 'active'">
 
                     <div class="inlineDiv" >
-                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);">
+                        <img class="sel" src="images/circle.png" width="20" height="20"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
                     </div>
                     <div class="inlineDiv">{{t.title}}</div>
                 </div>
@@ -270,20 +272,20 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 inner" >
+            <div class="col-md-3 inner" >
                 {{tasks.length}} items left
             </div>
             <div class="col-md-1  inner" >
-                <div ng-click="showAll()">All</div>
+                <div ng-click="showAll()" onmouseover="" style="cursor: pointer;" class="capabilities">All</div>
             </div>
-            <div class="col-md-1  inner">
-                <div ng-click="showCompleted()">Completed</div>
-            </div>
-            <div class="col-md-1  inner" >
-                <div ng-click="showActive()">Active</div>
+            <div class="col-md-2  inner">
+                <div ng-click="showCompleted()" onmouseover="" style="cursor: pointer;" class="capabilities">Completed</div>
             </div>
             <div class="col-md-1  inner" >
-                <div ng-click="clearCompleted()">Clear</div>
+                <div ng-click="showActive()" onmouseover="" style="cursor: pointer;" class="capabilities">Active</div>
+            </div>
+            <div class="col-md-1  inner" >
+                <div ng-click="clearCompleted()" onmouseover="" style="cursor: pointer;" class="capabilities">Clear</div>
             </div>
         </div>
 
