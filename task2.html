@@ -20,8 +20,6 @@
     </style>
     <script src="js/taskmanager.js"></script>
 
-
-
 </head>
 
 <body style="background-color: #EAEAEA;">
@@ -59,7 +57,8 @@
                         <img class="sel" src="images/circle.png" width="30" height="30"  ng-click="completed(t);" onclick="selectImage(this);" onmouseover="" style="cursor: pointer;">
                     </div>
                     <div class="inlineDiv">
-                        <input type="text" value={{t.title}} style="border: none;background: transparent;" ng-keyup="edit($event,t)">
+                        <input type="text" class="mytitle" value={{t.title}} style="border: none;background: transparent;" ng-keyup="$event.keyCode == 13 ? edit($event,t) : null">
+                        <!--<input type="text" value={{t.title}} style="border: none;background: transparent;" ng-keyup="$event.keyCode == 13 ? edit($event,t) : null">-->
                     </div>
                 </div>
 

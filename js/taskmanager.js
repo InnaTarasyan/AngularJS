@@ -135,6 +135,7 @@ var app= angular.module('todoApp', [])
 
             if(checked==false) {
 
+
                 for (var i = 0; i < $scope.tasks.length; i++) {
                     statuses.push($scope.tasks[i].status);
                     if($scope.tasks[i].status!="completed")
@@ -152,6 +153,7 @@ var app= angular.module('todoApp', [])
                 checked=true;
             }else if(checked==true){
 
+
                 for(var i=0;i<$scope.tasks.length;i++){
                     $scope.tasks[i].status=statuses[i];
                     if( $scope.tasks[i].status=="active"){
@@ -161,19 +163,35 @@ var app= angular.module('todoApp', [])
 
                 }
 
+               // alert(statuses);
                 statuses=[];
                 checked=false;
             }
 
-        }
+        };
 
         $scope.edit=function(event,t){
 
-            var textInput=event.target.value;
 
+            /*
+            if(event.keyCode==13){
+               var elements=document.getElementsByClassName("mytitle");
+
+               for(var i=0;i<elements.length;i++){
+                   elements[i].blur();
+               }
+
+            }*/
+            var textInput=event.target.value;
             var idx = $scope.tasks.indexOf(t);
             $scope.tasks[idx]={title:textInput,status:'active'};
 
+           // $scope.tasks2[idx]={title:textInput,status:'active'};
+
+            var idx2 = $scope.tasks2.indexOf(t);
+            $scope.tasks2[idx2]={title:textInput,status:'active'};
+
+            $scope.tasks=$scope.tasks2;
 
         }
 
