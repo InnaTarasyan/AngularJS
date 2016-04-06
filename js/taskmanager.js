@@ -97,6 +97,7 @@ var app= angular.module('todoApp', [])
 
         };
         $scope.showActive=function(){
+
             if(count==0)
             {
                 for(var i=0;i<$scope.tasks.length;i++)
@@ -107,8 +108,11 @@ var app= angular.module('todoApp', [])
             }
             count++;
 
-
+            if($scope.allTasks.length>0)
             $scope.tasks=$scope.allTasks;
+
+
+
             unSelectAllTasks();
             // $scope.allTasks=$scope.tasks;
             $scope.tasks = $scope.tasks.filter(function(x) { return $scope.completedTasks.indexOf(x) < 0 })
