@@ -191,7 +191,7 @@ var app= angular.module('todoApp', [])
             var idx2 = $scope.tasks2.indexOf(t);
             $scope.tasks2[idx2]={title:textInput,status:'active'};
 
-            $scope.tasks=$scope.tasks2;
+
 
         }
 
