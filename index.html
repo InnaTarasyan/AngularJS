@@ -73,6 +73,7 @@
                     };
 
                     $scope.completed = function (param) {
+
                         if ($scope.completedTasks.indexOf(param) == -1)
                         {
                             param.status='completed';
@@ -146,14 +147,18 @@
                     $scope.selectAllRows=function(){
 
                         if(checked==false) {
+
                             for (var i = 0; i < $scope.tasks.length; i++) {
                                 statuses.push($scope.tasks[i].status);
-                                $scope.tasks[i].status = "completed";
+                                if($scope.tasks[i].status!="completed")
+                                     $scope.tasks[i].status = "completed";
                             }
 
-                            $scope.completedTasks=$scope.tasks;
-                           checked=true;
-                        }else{
+                           // $scope.completedTasks=$scope.tasks;
+                            checked=true;
+                        }else if(checked==true){
+
+
                             for(var i=0;i<$scope.tasks.length;i++){
                                 $scope.tasks[i].status=statuses[i];
 
