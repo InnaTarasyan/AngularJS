@@ -151,11 +151,12 @@
                                 $scope.tasks[i].status = "completed";
                             }
 
-                            //$scope.completedTasks=$scope.tasks;
+                            $scope.completedTasks=$scope.tasks;
                            checked=true;
                         }else{
                             for(var i=0;i<$scope.tasks.length;i++){
                                 $scope.tasks[i].status=statuses[i];
+
                             }
 
                             statuses=[];
