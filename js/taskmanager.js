@@ -193,7 +193,6 @@ var app= angular.module('todoApp', [])
 
             $scope.showCompleted();
 
-
         }
 
     });
