@@ -172,7 +172,6 @@ var app= angular.module('todoApp', [])
 
         $scope.edit=function(event,t){
 
-
             /*
             if(event.keyCode==13){
                var elements=document.getElementsByClassName("mytitle");
@@ -182,15 +181,17 @@ var app= angular.module('todoApp', [])
                }
 
             }*/
+
+             var idx2 = $scope.tasks2.indexOf(t);
+
             var textInput=event.target.value;
             var idx = $scope.tasks.indexOf(t);
+
             $scope.tasks[idx]={title:textInput,status:'active'};
-
-           // $scope.tasks2[idx]={title:textInput,status:'active'};
-
-            var idx2 = $scope.tasks2.indexOf(t);
             $scope.tasks2[idx2]={title:textInput,status:'active'};
 
+
+            $scope.showCompleted();
 
 
         }
